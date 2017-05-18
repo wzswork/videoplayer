@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vttdemo</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/video.css">
+	<style type="text/css">
+		.content{
+			width: 800px;
+			margin: 10% auto;
+		}
+
+		button{
+			padding: 8px 18px;
+			font-size: 16px;
+			background-color: #fff;
+			border: 1px solid #eee;
+			border-radius: 4px;
+			margin-right: 20px;
+			cursor: pointer;
+		}
+		
+		video::cue(.cuestyle){
+			font-size: 26px;
+			color: #39b54a;
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+		<div class="video-box">
+			<video width="800" id="video">
+				<source src="test.mp4" type="video/mp4">
+				<track id="enTrack" src="en.vtt" label="English" kind="subtitles" srclang="en" default>
+				<track id="cnTrack" src="cn.vtt" label="Chinese" kind="subtitles" srclang="zh-cn">
+			</video>
+			<div class="control-box">
+				<div class="progress">
+					<span class="progress-time"></span>
+					<div class="progress-point"></div>
+					<div class="progress-cached"></div>
+					<div class="progress-played"></div>
+				</div>
+				<div class="controls-left">
+					<div class="play-button"></div>
+					<div class="time">00:00/00:00</div>
+					<div class="prev-button">上一句</div>
+					<div class="next-button">下一句</div>
+				</div>
+				<div class="controls-right">
+					<div class="volume-button"></div>
+					<div class="volume-progress">
+						<div class="volume-point"></div>
+						<div class="volume-now"></div>
+					</div>
+					<div class="lan-select">
+						<div class="lan-button">英语</div>
+						<div class="lan-list" style="display: none;">
+							<ul>
+							    <li data-index="0">英语</li>
+							    <li data-index="1">中文</li>
+							    <li data-index="-">无字幕</li>
+							</ul>
+						</div>
+					</div>
+					<div class="full-button"></div>
+				</div>
+			</div>
+		</div>
+		
+		<button id="prev">上一句</button>
+		<button id="next">下一句</button>
+		<button id="play">播放</button>
+		<button id="en">英文</button>
+		<button id="cn">中文</button>
+	</div>
+	<script src="js/test.js"></script>
+</body>
+</html>

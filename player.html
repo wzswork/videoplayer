@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vttdemo</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/player.css">
+	<style type="text/css">
+		.content{
+			width: 800px;
+			margin: 10% auto;
+		}
+
+		button{
+			padding: 8px 18px;
+			font-size: 16px;
+			background-color: #fff;
+			border: 1px solid #eee;
+			border-radius: 4px;
+			margin-right: 20px;
+			cursor: pointer;
+		}
+		
+		video::cue(.cuestyle){
+			font-size: 26px;
+			color: #39b54a;
+		}
+	</style>
+</head>
+<body>
+	<div class="content">
+	</div>
+	<script src="js/player.js"></script>
+	<script type="text/javascript">
+		var content = document.querySelector('.content'); 
+		var player = window.enplayer;
+		player.start({
+			dom: content,
+			video: [{src: 'test.mp4', type: 'video/mp4'}],
+			track: [{
+				id: 'enTrack',
+				src: 'en.vtt',
+				label: '英文',
+				isDefault: true
+			},{
+				id: 'cnTrack',
+				src: 'cn.vtt',
+				label: '中文',
+				isDefault: false
+			}],
+			width: 800,
+			height: 450
+		});
+	</script>
+</body>
+</html>
