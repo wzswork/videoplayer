@@ -62,7 +62,7 @@ video::cue {
 	display: none;
 	background-color: #fff;
 	top: -5px;
-	left: -8px;
+	left: 0;
 	width: 16px;
 	height: 16px;
 	border-radius: 8px;
@@ -70,9 +70,22 @@ video::cue {
 	cursor: pointer;
 }
 
+.video-box .progress-time{
+	position: absolute;
+	display: none;
+	background-color: #000;
+	color: #ababab;
+	padding: 4px 8px;
+	font-size: 12px;
+	top: -26px;
+	border-radius: 4px;
+	z-index: 104
+}
+
 .video-box .control-box:hover .progress-point{
 	display: block;
 }
+
 
 .video-box .controls-left{
 	position: absolute;
