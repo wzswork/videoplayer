@@ -66,8 +66,7 @@
 								'<div class="lan-select">'+
 									'<div class="lan-button">'+defaultTrack.label+'</div>'+
 									'<div class="lan-list" style="display: none;">'+
-										'<ul>'+
-											(function(){
+										'<ul>'+(function(){
 												var li = '';
 												for(var t = 0; t < opts.track.length; t++){
 													li += '<li data-index="'+t+'">'+opts.track[t].label+'</li>';
@@ -82,6 +81,7 @@
 							'</div>'+
 						'</div>';
 			videoBox.innerHTML = videoHtml;
+			videoBox.style.height = opts.height + 36 + 'px';
 			opts.dom.appendChild(videoBox);
 			return this;
 		},
@@ -105,6 +105,8 @@
 			this.volnow = dom.querySelector('.volume-now');
 			this.volprogress = dom.querySelector('.volume-progress');
 			this.nowvol = 0;
+			this.fullbtn = dom.querySelector('.full-button');
+			this.controlBox = dom.querySelector('.control-box');
 			return this;
 		},
 		// 绑定事件
@@ -291,6 +293,21 @@
 				console.log(_this.vi.volume);
 			}
 
+			_this.fullbtn.onclick = function(){
+				if(!isFullscreen()){
+					requestFullScreen(videoBox);
+				}else{
+					exitFullscreen(videoBox);
+				}
+			}
+
+			document.body.onkeydown = function(e){
+				if(e.keyCode == 27){
+					exitFullscreen(videoBox);
+					e.preventDefault();
+				}
+			}
+
 			return this;
 		},
 		start: function(opts){
@@ -312,9 +329,62 @@
 	}
 
 	// 全屏
-	function fullScreen(argument) {
-		// body...
+	//进入全屏
+	function requestFullScreen(de) {
+	    if(de.requestFullscreen) {
+           de.requestFullscreen();
+        } else if(de.mozRequestFullScreen) {
+           de.mozRequestFullScreen();
+        } else if(de.msRequestFullscreen){ 
+           de.msRequestFullscreen();  
+        } else if(de.oRequestFullscreen){
+            de.oRequestFullscreen();
+        } else if(de.webkitRequestFullscreen){
+           de.webkitRequestFullScreen();
+        }
+	    de.style.width = 100+'%';
+	    de.style.height = 100+'%';
+	    // enplayer.vi.width = window.screen.width;
+	    // enplayer.vi.height = window.screen.height;
+	    enplayer.vi.style.width = '100%';
+	    enplayer.vi.style.height = '100%';
+	    enplayer.controlBox.style.opacity = '0';
+	    enplayer.controlBox.onmouseover = function(){
+	    	enplayer.controlBox.style.opacity = '1';
+	    };
+	    enplayer.controlBox.onmouseout = function(){
+	    	enplayer.controlBox.style.opacity = '0';
+	    };
 	}
+	//退出全屏
+	function exitFullscreen(de) {
+	    
+	    enplayer.vi.width = enplayer.options.width;
+	    enplayer.vi.height = enplayer.options.height;
+	    de.style.width = enplayer.options.width + 'px';
+	    de.style.height = enplayer.options.height + 'px';
+	    enplayer.controlBox.style.opacity = '1';
+	    enplayer.controlBox.onmouseover = null;
+	    enplayer.controlBox.onmouseout = null;
+	    if (document.exitFullscreen) {
+         	document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+         	document.msExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+         	document.mozCancelFullScreen();
+        } else if(document.oRequestFullscreen){
+            document.oCancelFullScreen();
+        }else if (document.webkitExitFullscreen){
+         	document.webkitExitFullscreen();
+        }
+	}
+	// 判断全屏
+	function isFullscreen(){
+        return document.fullscreenElement    ||
+               document.msFullscreenElement  ||
+               document.mozFullScreenElement ||
+               document.webkitFullscreenElement || false;
+    }
 
 	return enplayer;
 });
