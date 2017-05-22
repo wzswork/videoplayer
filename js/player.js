@@ -38,7 +38,7 @@
 				videoHtml += '<source src="'+opts.video[i].src+'" type="'+opts.video[i].type+'">';
 			}
 			for(var j = 0; j < opts.track.length; j++){
-				videoHtml += '<track kind="subtitles" id="'+opts.track[j].id+'" label="'+opts.track[j].label+'" src="'+opts.track[j].src+'" '+(opts.track[j].isDefault?"default":"")+'>';
+				videoHtml += '<track kind="subtitles" id="'+opts.track[j].id+'" label="'+opts.track[j].label+'" src="'+opts.track[j].src+'" '+(opts.track[j].isDefault?"default":"")+' srclang = "en">';
 				if(opts.track[j].isDefault){
 					defaultTrack = opts.track[j];
 				}
@@ -189,13 +189,23 @@
 					}
 				}
 			};
-
+			
 			// 元数据
 			_this.vi.onloadedmetadata = function(){
 				_this.timebox.textContent = formatTime(0)+'/'+formatTime(_this.vi.duration);
 				_this.volpoint.style.left = _this.vi.volume * 60-8 + 'px';
 				_this.volnow.style.width = _this.vi.volume * 60-8 + 'px';
 			};
+			// 播放结束
+			_this.vi.onended = function() {
+				if(_this.play.className == 'play-button'){
+					_this.vi.play();
+					_this.play.className = 'play-button pause-button';
+				}else{
+					_this.vi.pause();
+					_this.play.className = 'play-button';	
+				}
+			}
 
 			//缓冲条
 			_this.vi.onprogress	= function(){
